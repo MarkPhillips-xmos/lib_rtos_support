@@ -28,7 +28,7 @@ void soc_peripheral_varlist_tx(
 
     uint32_t state = rtos_interrupt_mask_all();
 
-    chan_init_transaction_master(&c, &tc);
+    tc = chan_init_transaction_master(c);
 
     va_start(ap, num_args);
     for (i = 0; i < num_args; i++) {
@@ -39,7 +39,7 @@ void soc_peripheral_varlist_tx(
     }
     va_end(ap);
 
-    chan_complete_transaction(&c, &tc);
+    chan_complete_transaction(tc);
 
     rtos_interrupt_mask_set(state);
 }
@@ -51,7 +51,7 @@ void soc_peripheral_function_code_rx(
     uint32_t state = rtos_interrupt_mask_all();
 
     /* TODO: Only input 8bit code + end token */
-    chan_in_word(c, code);
+    *code = chan_in_word(c);
 
     rtos_interrupt_mask_set(state);
 }
@@ -67,7 +67,7 @@ void soc_peripheral_varlist_rx(
 
     uint32_t state = rtos_interrupt_mask_all();
 
-    chan_init_transaction_slave(&c, &tc);
+    tc = chan_init_transaction_slave(c);
 
     va_start(ap, num_args);
     for (i = 0; i < num_args; i++) {
@@ -78,7 +78,7 @@ void soc_peripheral_varlist_rx(
     }
     va_end(ap);
 
-    chan_complete_transaction(&c, &tc);
+    chan_complete_transaction(tc);
 
     rtos_interrupt_mask_set(state);
 }

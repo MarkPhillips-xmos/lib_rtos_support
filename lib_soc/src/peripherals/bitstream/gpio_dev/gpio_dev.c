@@ -80,7 +80,11 @@ void gpio_dev(
                             sizeof(gpio_id), &gpio_id);
 
                     port_res = get_port( gpio_id );
-                    retval_int = port_alloc( &port_res, (port_id_t)port_res );
+                    port_alloc((port_id_t)port_res);
+                    //retval_int = port_alloc( &port_res, (port_id_t)port_res );
+
+                    // TODO - fix this retval
+                    retval_int = 0;
 
                     soc_peripheral_varlist_tx(
                             ctrl_c, 1,
@@ -93,7 +97,9 @@ void gpio_dev(
                             sizeof(gpio_id), &gpio_id);
 
                     port_res = get_port( gpio_id );
-                    retval_int = port_free( &port_res );
+                    port_free( port_res );
+                    // TODO
+                    retval_int = 0;
 
                     soc_peripheral_varlist_tx(
                             ctrl_c, 1,
@@ -111,14 +117,16 @@ void gpio_dev(
                     if( ( port_irq_flags & mask ) != 0 )
                     {
                         port_irq_flags &= ~mask;
-                        retval_int = port_in( port_res, &data );
+                        data = port_in( port_res );
                         port_set_trigger_in_not_equal( port_res, data );
                         port_enable_trigger( port_res );
                     }
                     else
                     {
-                        retval_int = port_peek( port_res, &data );
+                        data = port_peek( port_res );
                     }
+                    // TODO
+                    retval_int = 0;
 
                     soc_peripheral_varlist_tx(
                             ctrl_c, 2,
@@ -134,7 +142,9 @@ void gpio_dev(
 
                     port_res = get_port( gpio_id );
 
-                    retval_int = port_out( port_res, data );
+                    port_out( port_res, data );
+                    // TODO
+                    retval_int = 0;
 
                     soc_peripheral_varlist_tx(
                             ctrl_c, 1,
@@ -148,7 +158,9 @@ void gpio_dev(
 
                     port_res = get_port( gpio_id );
 
-                    retval_int = port_peek( port_res, &data );
+                    data = port_peek( port_res );
+                    // TODO
+                    retval_int = 0;
 
                     soc_peripheral_varlist_tx(
                             ctrl_c, 2,
@@ -163,7 +175,9 @@ void gpio_dev(
 
                     port_res = get_port( gpio_id );
 
-                    retval_int = port_setup_select( port_res, gpio_id );
+                    port_setup_select( port_res, gpio_id );
+                    // TODO
+                    retval_int = 0;
 
                     soc_peripheral_varlist_tx(
                             ctrl_c, 1,
@@ -177,9 +191,11 @@ void gpio_dev(
 
                     port_res = get_port( gpio_id );
 
-                    port_peek( port_res, &data );
+                    data = port_peek( port_res );
                     port_set_trigger_in_not_equal( port_res, data );
-                    retval_int = port_enable_trigger( port_res );
+                    port_enable_trigger( port_res );
+                    // TODO
+                    retval_int = 0;
 
                     soc_peripheral_varlist_tx(
                             ctrl_c, 1,
@@ -193,7 +209,8 @@ void gpio_dev(
 
                     port_res = get_port( gpio_id );
 
-                    retval_int = port_disable_trigger( port_res );
+                    port_disable_trigger( port_res );
+                    retval_int = 0;
 
                     soc_peripheral_varlist_tx(
                             ctrl_c, 1,

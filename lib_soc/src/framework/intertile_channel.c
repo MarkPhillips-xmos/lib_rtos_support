@@ -10,7 +10,7 @@ chanend soc_channel_establish(
 {
     chanend local_c;
 
-    chanend_alloc(&local_c);
+    local_c = chanend_alloc();
     xassert(local_c != 0);
 
     if (direction & soc_channel_input) {
@@ -20,7 +20,7 @@ chanend soc_channel_establish(
 
     if (direction & soc_channel_output) {
         chanend remote_c;
-        s_chan_in_word(remote_tile_chanend, (uint32_t *) &remote_c);
+        remote_c = s_chan_in_word(remote_tile_chanend);
         s_chan_check_ct_end(remote_tile_chanend);
         chanend_set_dest(local_c, remote_c);
     }

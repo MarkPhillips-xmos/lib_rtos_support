@@ -108,12 +108,12 @@ uint16_t soc_peripheral_rx_dma_xfer(
     transacting_chanend_t tc;
     uint32_t length;
 
-    chan_init_transaction_master(&c, &tc);
+    tc = chan_init_transaction_master(c);
     t_chan_out_word(&tc, max_length);
-    t_chan_in_word(&tc, &length);
+    length = t_chan_in_word(&tc);
     xassert(length <= max_length);
     t_chan_in_buf_byte(&tc, data, length);
-    chan_complete_transaction(&c, &tc);
+    chan_complete_transaction(tc);
 
     return (uint16_t) length;
 }
@@ -160,10 +160,10 @@ void soc_peripheral_tx_dma_xfer(
 {
     transacting_chanend_t tc;
 
-    chan_init_transaction_master(&c, &tc);
+    tc = chan_init_transaction_master(c);
     t_chan_out_word(&tc, length);
     t_chan_out_buf_byte(&tc, data, length);
-    chan_complete_transaction(&c, &tc);
+    chan_complete_transaction(tc);
 }
 
 void soc_peripheral_tx_dma_direct_xfer(
@@ -319,8 +319,8 @@ static void device_to_dma(soc_peripheral_t device)
 
     length = soc_dma_ring_buf_length_get(&device->rx_ring_buf);
 
-    chan_init_transaction_slave(&device->rx_c, &tc);
-    t_chan_in_word(&tc, &total_length);
+    tc = chan_init_transaction_slave(device->rx_c);
+    total_length = t_chan_in_word(&tc);
     xassert(total_length <= length);
 
     do {
@@ -334,7 +334,7 @@ static void device_to_dma(soc_peripheral_t device)
         soc_dma_ring_buf_release(&device->rx_ring_buf, 1, length);
     } while (more);
 
-    chan_complete_transaction(&device->rx_c, &tc);
+    chan_complete_transaction(tc);
 
     rtos_lock_acquire(0);
     device->interrupt_status |= SOC_PERIPHERAL_ISR_DMA_RX_DONE_BM;
@@ -360,8 +360,8 @@ static void dma_to_device(soc_peripheral_t device)
 
     total_length = soc_dma_ring_buf_length_get(&device->tx_ring_buf);
 
-    chan_init_transaction_slave(&device->tx_c, &tc);
-    t_chan_in_word(&tc, &max_length);
+    tc = chan_init_transaction_slave(device->tx_c);
+    max_length = t_chan_in_word(&tc);
     xassert(total_length <= max_length);
     t_chan_out_word(&tc, total_length);
 
@@ -376,7 +376,7 @@ static void dma_to_device(soc_peripheral_t device)
 
     xassert(total_length == 0);
 
-    chan_complete_transaction(&device->tx_c, &tc);
+    chan_complete_transaction(tc);
 
     xassert(device->tx_ready);
     device->tx_ready = 0;
@@ -392,7 +392,7 @@ static void device_to_hub_irq(soc_peripheral_t device)
 {
     uint32_t status;
 
-    chan_in_word(device->irq_c, &status);
+    status = chan_in_word(device->irq_c);
 
     rtos_lock_acquire(0);
     device->interrupt_status |= status;
@@ -405,7 +405,7 @@ void soc_peripheral_hub()
 {
     int i;
 
-    chanend_alloc(&rtos_irq_c);
+    rtos_irq_c = chanend_alloc();
 
     select_disable_trigger_all();
 

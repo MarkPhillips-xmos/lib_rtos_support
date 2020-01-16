@@ -19,7 +19,7 @@
 #include "audio_pipeline.h"
 #include "xcore_c.h"
 
-static QueueHandle_t gpio_event_q;
+// static QueueHandle_t gpio_event_q;
 static TaskHandle_t gpio_handler_task;
 static TimerHandle_t volume_up_timer;
 static TimerHandle_t volume_down_timer;
@@ -184,7 +184,7 @@ void gpio_ctrl_create( UBaseType_t priority )
 {
     soc_peripheral_t dev;
 
-    gpio_event_q = xQueueCreate(2, sizeof(void *));
+//    gpio_event_q = xQueueCreate(2, sizeof(void *));
 
     dev = gpio_driver_init(
             BITSTREAM_GPIO_DEVICE_A,        /* Initializing GPIO device A */

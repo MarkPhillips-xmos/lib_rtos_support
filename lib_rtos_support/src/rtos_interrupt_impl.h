@@ -9,7 +9,7 @@
 #ifndef RTOS_INTERRUPT_IMPL_H_
 #define RTOS_INTERRUPT_IMPL_H_
 
-#include "xcore_c_interrupt_impl.h"
+// #include "xcore_c_interrupt_impl.h"
 #include "rtos_support_rtos_config.h"
 
 #define _DEFINE_RTOS_INTERRUPT_PERMITTED_DEF(root_function) \

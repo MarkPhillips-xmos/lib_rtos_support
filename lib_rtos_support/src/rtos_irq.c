@@ -184,7 +184,7 @@ void rtos_irq_enable( int total_rtos_cores )
     int core_id;
 
     core_id = rtos_core_id_get();
-    chanend_alloc( &rtos_irq_chanend[ core_id ] );
+    rtos_irq_chanend[ core_id ] = chanend_alloc();
     chanend_setup_interrupt_callback( rtos_irq_chanend[ core_id ], NULL, RTOS_INTERRUPT_CALLBACK( rtos_irq_handler ) );
     chanend_enable_trigger( rtos_irq_chanend[ core_id ] );
 
