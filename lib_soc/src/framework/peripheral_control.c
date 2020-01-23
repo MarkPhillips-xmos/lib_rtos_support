@@ -5,6 +5,9 @@
 
 #include "rtos_support.h"
 
+#include "xcore/channel.h"
+#include "xcore/channel_transaction.h"
+
 void soc_peripheral_function_code_tx(
         chanend c,
         uint32_t code)

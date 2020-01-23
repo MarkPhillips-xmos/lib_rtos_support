@@ -8,6 +8,10 @@
 
 #include "rtos_interrupt_impl.h"
 
+// For XCORE_C_STR
+#include "xcore/interrupt.h"
+
+
 /** Define a function that allows RTOS interrupts to occur within its scope
  *
  *  This macro will define two functions for you:

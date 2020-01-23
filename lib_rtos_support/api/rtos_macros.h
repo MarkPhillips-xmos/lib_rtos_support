@@ -4,7 +4,6 @@
 #define RTOS_MACROS_H_
 
 #include "rtos_support_rtos_config.h"
-#include "xcore_c.h"
 
 /*
  * Inserts a compile time memory barrier

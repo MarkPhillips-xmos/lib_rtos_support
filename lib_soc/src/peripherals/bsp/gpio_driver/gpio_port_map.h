@@ -3,8 +3,6 @@
 #ifndef GPIO_PORT_MAP_H_
 #define GPIO_PORT_MAP_H_
 
-#include "xcore_c.h"
-
 #define GPIO_TOTAL_PORT_CNT   (32)
 
 typedef enum {

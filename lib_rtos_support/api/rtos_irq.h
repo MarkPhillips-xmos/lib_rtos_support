@@ -3,7 +3,10 @@
 #ifndef RTOS_IRQ_H_
 #define RTOS_IRQ_H_
 
-#include "xcore_c.h"
+#include "rtos_support_rtos_config.h"
+
+// For chanend typedef
+#include "xcore/chanend.h"
 
 /**
  * IRQ ISR callback function pointer type.

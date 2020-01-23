@@ -2,7 +2,7 @@
 
 #include "soc.h"
 
-#include "xcore_c.h"
+#include "xcore/channel_streaming.h"
 
 chanend soc_channel_establish(
         chanend remote_tile_chanend,

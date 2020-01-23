@@ -3,8 +3,11 @@
 #include <string.h>
 
 #include "rtos_support.h"
-#include "xcore_c.h"
 #include "soc.h"
+
+#include "xcore/clock.h"
+#include "xcore/port.h"
+#include "xcore/select.h"
 
 #include "gpio_dev.h"
 
@@ -80,7 +83,7 @@ void gpio_dev(
                             sizeof(gpio_id), &gpio_id);
 
                     port_res = get_port( gpio_id );
-                    port_alloc((port_id_t)port_res);
+                    port_enable((port_id_t)port_res);
                     //retval_int = port_alloc( &port_res, (port_id_t)port_res );
 
                     // TODO - fix this retval
@@ -97,7 +100,7 @@ void gpio_dev(
                             sizeof(gpio_id), &gpio_id);
 
                     port_res = get_port( gpio_id );
-                    port_free( port_res );
+                    port_disable( port_res );
                     // TODO
                     retval_int = 0;
 

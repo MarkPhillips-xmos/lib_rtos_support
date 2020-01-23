@@ -6,6 +6,11 @@
 
 #include "xassert.h"
 
+#include "xcore/select.h"
+#include "xcore/channel.h"
+#include "xcore/channel_streaming.h"
+#include "xcore/channel_transaction.h"
+
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 
 #define MAX_PERIPHERALS 8
